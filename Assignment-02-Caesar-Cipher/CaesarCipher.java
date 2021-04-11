@@ -62,5 +62,15 @@ public class CaesarCipher {
 		String decrypted = encrypt(encrypted, 26-key);
         System.out.println(decrypted);
     }
+	
+	
+	
+	
+	public String encryptTwoKeys(String input, int key1, int key2) {
+		
+		
+	
+	
+	}
 
 }
