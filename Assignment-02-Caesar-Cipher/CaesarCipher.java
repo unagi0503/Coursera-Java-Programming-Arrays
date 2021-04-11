@@ -6,31 +6,57 @@ public class CaesarCipher {
 		
 		StringBuilder encrypted = new StringBuilder(input);
 		
-		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String alphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String alphabetLower = "abcdefghijklmnopqrstuvwxyz";
 		
-		String shiftedAlphabet = alphabet.substring(key)+alphabet.substring(0,key);
+		String shiftedAlphabetUpper = alphabetUpper.substring(key)+alphabetUpper.substring(0,key);
+		String shiftedAlphabetLower = alphabetLower.substring(key)+alphabetLower.substring(0,key);
 		
-	    for(int i = 0; i < encrypted.length(); i++) {
+	    //Count from 0 to < length of encrypted, (call it i)
+        for(int i = 0; i < encrypted.length(); i++) {
+            //Look at the ith character of encrypted (call it currChar)
+            char currChar = encrypted.charAt(i);
 			
-			char currChar = encrypted.charAt(i);
-			int idx = alphabet.indexOf(currChar);
+			if(Character.isUpperCase(currChar)) {
+			    //Find the index of currChar in the alphabet (call it idx)
+                int idx = alphabetUpper.indexOf(currChar);
+                //If currChar is in the alphabet
+                if(idx != -1){
+                    //Get the idxth character of shiftedAlphabet (newChar)
+                    char newChar = shiftedAlphabetUpper.charAt(idx);
+                    //Replace the ith character of encrypted with newChar
+                    encrypted.setCharAt(i, newChar);
+                }
+                //Otherwise: do nothing 		    
+			} else if(Character.isLowerCase(currChar)) {
+			    //Find the index of currChar in the alphabet (call it idx)
+                int idx = alphabetLower.indexOf(currChar);
+                //If currChar is in the alphabet
+                if(idx != -1){
+                    //Get the idxth character of shiftedAlphabet (newChar)
+                    char newChar = shiftedAlphabetLower.charAt(idx);
+                    //Replace the ith character of encrypted with newChar
+                    encrypted.setCharAt(i, newChar);
+                }
+                //Otherwise: do nothing 		    			
+			} else {
 			
-		    if(idx != -1){
-				char newChar = shiftedAlphabet.charAt(idx);
-				encrypted.setCharAt(i, newChar);
 			}
+		            
+        }
 		
-		}
-		
-		return encrypted.toString();
-	}
+        //Your answer is the String inside of encrypted
+        return encrypted.toString();
+    }
 	
 	public void testCaesar() {
-        int key = 23;
+        int key = 17;
         
-		String encrypted = encrypt("FIRST LEGION ATTACK EAST FLANK!", key);
-        System.out.println(encrypted);
+		FileResource fr = new FileResource();
+	    String message = fr.asString();
 		
+		String encrypted = encrypt(message, key);
+        System.out.println(encrypted);
 		// expected result : "CFOPQ IBDFLK XQQXZH BXPQ CIXKH!"
 		
 		String decrypted = encrypt(encrypted, 26-key);
